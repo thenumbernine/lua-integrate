@@ -1,5 +1,5 @@
 local ivp = {}
-setmetatable(ivp, ivp)
+setmetatable(ivp, ivp)	-- for __call, so you can "xn = require 'integrate.ivp'(t, x, dt, f)"
 
 -- TODO rewrite the API to have more modular operations so that I can abstract it for GPU use as well
 ivp.methods = {
