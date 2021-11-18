@@ -1,6 +1,8 @@
 #!/usr/bin/env luajit
-local integrate = require 'integrate'
+
+local integrate = require 'integrate.ivp'	-- use our explicit/implicit ivp integrators
 local class = require 'ext.class'
+local table = require 'ext.table'
 local plot2d = require 'plot2d'
 
 -- numeric
