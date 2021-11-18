@@ -19,18 +19,10 @@ local rows = matrix()
 for n=1,1000 do
 	table.insert(rows, matrix{
 		n,
---[[ TODO my gnuplot lib has no good way to print with higher-than-default precision
-		('%.20f'):format(correct - integrate.rect(f, xL, xR, n)),
-		('%.20f'):format(correct - integrate.trapezoid(f, xL, xR, n)),
-		('%.20f'):format(correct - integrate.simpson(f, xL, xR, n)),
-		('%.20f'):format(correct - integrate.simpson2(f, xL, xR, n)),
---]]
--- [[
 		(correct - integrate.rect(f, xL, xR, n)),
 		(correct - integrate.trapezoid(f, xL, xR, n)),
 		(correct - integrate.simpson(f, xL, xR, n)),
 		(correct - integrate.simpson2(f, xL, xR, n)),
---]]
 	})
 end
 
@@ -39,6 +31,13 @@ gnuplot{
 	style = 'data lines',
 	data = rows:T(),
 	log = 'xy',
+	tostring = function(x)
+		if type(x) == 'number' then
+			return ('%.35f'):format(x)
+		else
+			return tostring(x)
+		end
+	end,
 	{using='1:2', title='rect'},
 	{using='1:3', title='trapezoid'},
 	{using='1:4', title='simpson'},
