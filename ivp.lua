@@ -2,18 +2,14 @@ local ivp = {}
 setmetatable(ivp, ivp)	-- for __call, so you can "xn = require 'integrate.ivp'(t, x, dt, f)"
 
 -- TODO rewrite the API to have more modular operations so that I can abstract it for GPU use as well
-ivp.methods = {
-	euler = require 'integrate.ivp.euler',
-	midpoint = require 'integrate.ivp.midpoint',
-	heun = require 'integrate.ivp.heun',
-	rk2alpha = require 'integrate.ivp.rk2alpha',
-	rk4 = require 'integrate.ivp.rk4',
-	rkf45 = require 'integrate.ivp.rkf45',
-}
--- annndd put them in the 'ivp' namespace too.  why not.  why even have 'methods' ?
-for k,v in pairs(ivp.methods) do
-	ivp[k] = v
-end
+ivp.euler = require 'integrate.ivp.euler'
+ivp.midpoint = require 'integrate.ivp.midpoint'
+ivp.heun = require 'integrate.ivp.heun'
+ivp.rk2alpha = require 'integrate.ivp.rk2alpha'
+ivp.rk4 = require 'integrate.ivp.rk4'
+ivp.rkf45 = require 'integrate.ivp.rkf45'
+
+ivp.method = 'euler'
 
 --[[
 arguments:
@@ -44,13 +40,7 @@ returns:
 	F(t+dt)
 --]]
 function ivp:__call(t, x, dt, f, methodName, ...)
-	methodName = methodName or 'euler'
-	local method = self.methods[methodName]
-	return method(t,x,dt,f,...)
-
-	-- TODO general constraint function for state after integration?
-	-- Minkowski: post-integration, re-normalize velocity:
-	--x.u[0] = math.sqrt(x.u[1] * x.u[1] + 1)	
+	return self[self.method](t,x,dt,f,...)
 end
 
 return ivp
