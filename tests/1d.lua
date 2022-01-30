@@ -45,6 +45,8 @@ gnuplot{
 	terminal = 'svg size 1024,768 background rgb "white"',
 	output = 'images/1d.svg',
 	style = 'data lines',
+	xlabel = 'number of points',
+	ylabel = 'integral error',
 	data = rows:T(),
 	log = 'xy',
 	tostring = function(x)
