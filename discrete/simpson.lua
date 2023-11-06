@@ -1,8 +1,14 @@
 -- https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson's_rule_for_irregularly_spaced_data
+local trapezoid = require 'integrate.discrete.trapezoid'
 local function simpson(xs, ys)
 	n = #xs
 	assert(#ys == n)
-	assert(n >= 3)
+	assert(n >= 2)
+	if n == 2 then
+		-- simpson needs 3 datapoints.
+		-- if we just get 2 then fall back on trapezoid
+		return trapezoid(xs, ys)
+	end
 	local sum = 0
 	for i=2,n-1,2 do
         local h0 = xs[i] - xs[i-1]
