@@ -1,7 +1,7 @@
 -- https://en.wikipedia.org/wiki/Simpson%27s_rule#Composite_Simpson's_rule_for_irregularly_spaced_data
 local trapezoid = require 'integrate.discrete.trapezoid'
 local function simpson(xs, ys)
-	n = #xs
+	local n = #xs
 	assert(#ys == n)
 	assert(n >= 2)
 	if n == 2 then

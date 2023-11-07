@@ -1,5 +1,5 @@
 local function trapezoid(xs, ys)
-	n = #xs
+	local n = #xs
 	assert(#ys == n)
 	assert(n >= 2)
 	local sum = 0
